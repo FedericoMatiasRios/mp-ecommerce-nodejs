@@ -1,22 +1,153 @@
-var express = require('express');
-var exphbs  = require('express-handlebars');
-var port = process.env.PORT || 3000
+const express = require('express');
+const exphbs = require('express-handlebars');
+const bodyParser = require('body-parser');
+const { MercadoPagoConfig, Preference } = require('mercadopago');
+require('dotenv').config();
 
-var app = express();
- 
+const app = express();
+const port = process.env.PORT || 3000;
+
+const client = new MercadoPagoConfig({
+    accessToken: process.env.MERCADOPAGO_ACCESS_TOKEN,
+    integratorId: 'dev_24c65fb163bf11ea96500242ac130004',
+  });
+
+// Use body-parser middleware
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
 
 app.use(express.static('assets'));
- 
 app.use('/assets', express.static(__dirname + '/assets'));
 
 app.get('/', function (req, res) {
-    res.render('home');
+    res.render('home', {view:'home'})
 });
 
 app.get('/detail', function (req, res) {
-    res.render('detail', req.query);
+    try {
+        const { id, title, img, unit, price } = req.query;
+
+        const baseURL = 'https://e767-2800-810-599-56-c363-d814-e53d-254.ngrok-free.app/';
+
+        const cleanedImagePath = img.replace('./', '');
+
+        const fullURL = baseURL + cleanedImagePath;
+
+        console.log(fullURL);
+
+        const preference = new Preference(client);
+
+        preference.create({
+          body: {
+            items: [
+              {
+                id: Number(1234),
+                title,
+                picture_url: fullURL,
+                description: 'Dispositivo móvil de Tienda e-commerce',
+                quantity: Number(unit),
+                unit_price: Number(price),
+                currency_id: "ARS",
+              }
+            ],
+            "payer": {
+                "name": "Lalo",
+                "surname": "Landa",
+                "email": "test_user_36961754@testuser.com",
+                "phone": {
+                    "area_code": "11",
+                    "number": Number(33670032)
+                },
+                "identification": {
+                    "type": "DNI",
+                    "number": "12345678"
+                },
+                "address": {
+                    "street_name": "calle falsa",
+                    "street_number": Number(123),
+                    "zip_code": "1706"
+                }
+            },
+            "back_urls": {
+                "success": "https://e767-2800-810-599-56-c363-d814-e53d-254.ngrok-free.app/success",
+                "failure": "https://e767-2800-810-599-56-c363-d814-e53d-254.ngrok-free.app/failure",
+                "pending": "https://e767-2800-810-599-56-c363-d814-e53d-254.ngrok-free.app/pending"
+            },
+            "auto_return": "approved",
+            "payment_methods": {
+                "excluded_payment_methods": [
+                    {
+                        "id": "visa"
+                    }
+                ],
+                "excluded_payment_types": [
+                    {
+                        "id": "ticket"
+                    }
+                ],
+                "installments": 6
+            },
+            "notification_url": "https://e767-2800-810-599-56-c363-d814-e53d-254.ngrok-free.app/notifications",
+            "external_reference": "federicomatiasrios@gmail.com",
+            "expires": false,
+          },
+          requestOptions: {
+            integratorId: 'dev_24c65fb163bf11ea96500242ac130004',
+        }
+        })
+        .then((preference) => {
+            const initPoint = preference.init_point;
+            console.log('init_point:', initPoint);
+
+            console.log('preference:', preference);
+
+            res.redirect(initPoint);
+            //res.render('detail', { view:'detail', title, price, unit, preference });
+        })
+        .catch((error) => {
+            console.error('Error al crear preferencia:', error);
+            res.status(500).json({ error: 'Error al procesar la solicitud' });
+        });
+
+    } catch (error) {
+        console.error('Error al procesar la solicitud:', error);
+        res.status(500).json({ error: 'Error al procesar la solicitud' });
+    }
 });
+
+app.get('/success', (req, res) => {
+	res.render('success',{
+		payment: req.query.payment_id,
+		merchantOrder: req.query.merchant_order_id,
+        paymentType: req.query.payment_type,
+        externalReference: req.query.external_reference
+	})
+})
+
+app.get('/failure', (req, res) => {
+	res.render('failure',{
+		payment: req.query.payment_id,
+		merchantOrder: req.query.merchant_order_id,
+        paymentType: req.query.payment_type,
+        externalReference: req.query.external_reference
+	})
+})
+
+app.get('/pending', (req, res) => {
+	res.render('pending',{
+		payment: req.query.payment_id,
+		merchantOrder: req.query.merchant_order_id,
+        paymentType: req.query.payment_type,
+        externalReference: req.query.external_reference
+	})
+})
+
+app.post("/notifications" , function (request, res) {
+    console.log(request.body);
+    res.status(200).send("Ok");
+  });
 
 app.listen(port);

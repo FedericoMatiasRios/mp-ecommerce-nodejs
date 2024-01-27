@@ -12,6 +12,26 @@
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
     crossorigin="anonymous"></script>
 
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
+    
+    <script>
+        const mp = new MercadoPago('APP_USR-ff96fe80-6866-4888-847e-c69250754d38');
+        const bricksBuilder = mp.bricks();
+
+        document.addEventListener("DOMContentLoaded", function () {
+            bricksBuilder.create("wallet", "wallet_container", {
+                initialization: {
+                    preferenceId: '{{ preference.id }}',
+                },
+                customization: {
+                    texts: {
+                        valueProp: 'smart_option',
+                    },
+                },
+            });
+        });
+    </script>
+
     <link rel="stylesheet" href="/assets/category-landing.css" media="screen, print">
 
     <link rel="stylesheet" href="/assets/category.css" media="screen, print">
@@ -53,5 +73,8 @@
             <circle class="mp-spinner-path" cx="50" cy="50" r="20" fill="none" stroke-miterlimit="10"></circle> </svg> 
         </div>
         <div id="ac-gn-viewport-emitter"> </div>
+        {{#if view}}
+        <script src="https://www.mercadopago.com/v2/security.js" view={{view}}></script>
+        {{/if}}
     </body>
 </html>
