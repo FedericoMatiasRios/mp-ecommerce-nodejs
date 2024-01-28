@@ -92,7 +92,7 @@ app.get('/detail', function (req, res) {
           }
         })
         .then((preference) => {
-            const initPoint = preference.init_point + "&redirect_mode=modal";
+            const initPoint = 'https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id='+preference.id+'&redirect_mode=modal';
             console.log('init_point:', initPoint);
 
             console.log('preference:', preference);
