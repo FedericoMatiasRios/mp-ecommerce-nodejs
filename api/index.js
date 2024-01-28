@@ -112,7 +112,7 @@ app.post("/notifications" , function (request, res) {
             email: 'test_user_36961754@testuser.com',
             phone: {
               area_code: '11',
-              number: '2222-3333'
+              number: Number(33670032)
             },
             identification: {
               type: 'DNI',
@@ -120,7 +120,7 @@ app.post("/notifications" , function (request, res) {
             },
             address: {
               street_name: 'calle falsa',
-              street_number: 123,
+              street_number: Number(123),
               zip_code: '1040'
             }
           },
