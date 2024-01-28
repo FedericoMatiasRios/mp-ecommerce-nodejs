@@ -93,24 +93,13 @@ app.post("/notifications" , function (request, res) {
   });
 
   app.post('/create_preference', function (req, res) {
-        const { id, title, img, unit, price } = req.query;
-
-        const baseURL = 'https://mp-ecommerce-nodejs-theta.vercel.app/';
-
-        const cleanedImagePath = img.replace('./', '');
-
-        const fullURL = baseURL + cleanedImagePath;
-
-        console.log(fullURL);
-
-
 
         let preference = {
           items: [
             {
               id: Number(1234),
               title,
-              picture_url: fullURL,
+              picture_url: ("https://mp-ecommerce-nodejs-theta.vercel.app" + req.body.img),
               description: 'Dispositivo móvil de Tienda e-commerce',
               quantity: Number(unit),
               unit_price: Number(price),
