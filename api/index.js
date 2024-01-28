@@ -98,11 +98,11 @@ app.post("/notifications" , function (request, res) {
           items: [
             {
               id: Number(1234),
-              title,
+              title: req.body.title,
               picture_url: ("https://mp-ecommerce-nodejs-theta.vercel.app" + req.body.img),
               description: 'Dispositivo móvil de Tienda e-commerce',
-              quantity: Number(unit),
-              unit_price: Number(price),
+              quantity: Number(req.body.unit),
+              unit_price: Number(req.body.price),
               currency_id: "ARS",
             }
           ],
