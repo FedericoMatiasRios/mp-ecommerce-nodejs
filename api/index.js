@@ -20,8 +20,7 @@ app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
 app.set('views', __dirname + '/../views');
 
-app.use(express.static('assets'));
-app.use('/assets', express.static(__dirname + '/assets'));
+app.use('/assets', express.static('assets'));
 
 app.get('/', function (req, res) {
     res.render('home', {view:'home'})
