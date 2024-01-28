@@ -51,74 +51,8 @@ app.get('/detail', function (req, res) {
 
         console.log(fullURL);
 
-        const preference = new Preference(client);
+        res.render('detail', { view:'item', title, price, unit });
 
-        preference.create({
-          body: {
-            items: [
-              {
-                id: Number(1234),
-                title,
-                picture_url: fullURL,
-                description: 'Dispositivo móvil de Tienda e-commerce',
-                quantity: Number(unit),
-                unit_price: Number(price),
-                currency_id: "ARS",
-              }
-            ],
-            payer: {
-              name: 'Lalo',
-              surname: 'Landa',
-              email: 'test_user_36961754@testuser.com',
-              phone: {
-                area_code: '11',
-                number: '2222-3333'
-              },
-              identification: {
-                type: 'DNI',
-                number: '22333444'
-              },
-              address: {
-                street_name: 'calle falsa',
-                street_number: 123,
-                zip_code: '1040'
-              }
-            },
-            back_urls: {
-              success: 'https://mp-ecommerce-nodejs-theta.vercel.app/success',
-              failure: 'https://mp-ecommerce-nodejs-theta.vercel.app/failure',
-              pending: 'https://mp-ecommerce-nodejs-theta.vercel.app/pending'
-            },
-            auto_return: 'approved',
-            payment_methods: {
-            excluded_payment_methods: [
-                      {
-                                id: "visa"
-                      }
-            ],
-            excluded_payment_types: [],
-            installments: 6
-            },
-            notification_url: 'https://mp-ecommerce-nodejs-theta.vercel.app/notifications',
-            statement_descriptor: 'MEUNEGOCIO',
-            external_reference: 'federicomatiasrios@gmail.com',
-          }
-        })
-        .then((preference) => {
-            const initPoint = preference.init_point + "&redirect_mode=modal";
-            console.log('init_point:', initPoint);
-
-            const initPointTry = 'https://www.mercadopago.com.ar/checkout/v1/payment/modal/?preference-id='+preference.id+'&from-widget=true&sniffing-rollout=sniffing-api';
-
-            console.log('preference:', preference);
-
-            //res.redirect(initPoint);
-            res.render('detail', { view:'detail', title, price, unit, preference, initPoint, initPointTry });
-        })
-        .catch((error) => {
-            console.error('Error al crear preferencia:', error);
-            res.status(500).json({ error: 'Error al procesar la solicitud' });
-        });
 
     } catch (error) {
         console.error('Error al procesar la solicitud:', error);
