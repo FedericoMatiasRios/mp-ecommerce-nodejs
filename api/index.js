@@ -92,14 +92,15 @@ app.get('/detail', function (req, res) {
           }
         })
         .then((preference) => {
-            const initPoint = 'https://www.mercadopago.com.ar/checkout/v1/payment/modal/?preference-id='+preference.id+'&from-widget=true&sniffing-rollout=sniffing-api'
+            const initPoint = preference.init_point + "&redirect_mode=modal";
             console.log('init_point:', initPoint);
 
+            const initPointTry = 'https://www.mercadopago.com.ar/checkout/v1/payment/modal/?preference-id='+preference.id+'&from-widget=true&sniffing-rollout=sniffing-api';
+
             console.log('preference:', preference);
-            const jsonPreference = JSON.stringify(preference);
 
             //res.redirect(initPoint);
-            res.render('detail', { view:'detail', title, price, unit, preference, initPoint, jsonPreference });
+            res.render('detail', { view:'detail', title, price, unit, preference, initPoint, initPointTry });
         })
         .catch((error) => {
             console.error('Error al crear preferencia:', error);
