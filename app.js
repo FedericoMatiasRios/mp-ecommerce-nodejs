@@ -30,7 +30,7 @@ app.get('/detail', function (req, res) {
     try {
         const { id, title, img, unit, price } = req.query;
 
-        const baseURL = 'https://9504-2800-810-599-56-c363-d814-e53d-254.ngrok-free.app/';
+        const baseURL = 'https://your-vercel-app-name.vercel.app/';
 
         const cleanedImagePath = img.replace('./', '');
 
@@ -72,9 +72,9 @@ app.get('/detail', function (req, res) {
                 }
             },
             "back_urls": {
-                "success": "https://9504-2800-810-599-56-c363-d814-e53d-254.ngrok-free.app/success",
-                "failure": "https://9504-2800-810-599-56-c363-d814-e53d-254.ngrok-free.app/failure",
-                "pending": "https://9504-2800-810-599-56-c363-d814-e53d-254.ngrok-free.app/pending"
+                "success": "https://your-vercel-app-name.vercel.app/success",
+                "failure": "https://your-vercel-app-name.vercel.app/failure",
+                "pending": "https://your-vercel-app-name.vercel.app/pending"
             },
             "auto_return": "approved",
             "payment_methods": {
@@ -85,7 +85,7 @@ app.get('/detail', function (req, res) {
                 ],
                 "installments": 6
             },
-            "notification_url": "https://9504-2800-810-599-56-c363-d814-e53d-254.ngrok-free.app/notifications",
+            "notification_url": "https://your-vercel-app-name.vercel.app/notifications",
             "external_reference": "federicomatiasrios@gmail.com",
             "expires": false,
           }
