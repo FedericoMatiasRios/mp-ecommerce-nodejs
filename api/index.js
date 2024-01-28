@@ -96,9 +96,10 @@ app.get('/detail', function (req, res) {
             console.log('init_point:', initPoint);
 
             console.log('preference:', preference);
+            const jsonPreference = JSON.stringify(preference);
 
             //res.redirect(initPoint);
-            res.render('detail', { view:'detail', title, price, unit, preference, initPoint });
+            res.render('detail', { view:'detail', title, price, unit, preference, initPoint, jsonPreference });
         })
         .catch((error) => {
             console.error('Error al crear preferencia:', error);
