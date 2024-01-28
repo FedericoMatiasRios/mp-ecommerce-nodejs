@@ -13,31 +13,6 @@
     crossorigin="anonymous"></script>
 
     <script src="https://sdk.mercadopago.com/js/v2"></script>
-    
-    <script>
-        const mp = new MercadoPago('APP_USR-ff96fe80-6866-4888-847e-c69250754d38', {
-        locale: 'es-AR'
-        });
-        const bricksBuilder = mp.bricks();
-
-        document.addEventListener("DOMContentLoaded", function () {
-            bricksBuilder.create("wallet", "wallet_container", {
-                initialization: {
-                    preferenceId: '{{ preference.id }}',
-                    redirectMode: "modal"
-                },
-                customization: {
-                    texts: {
-                        action: 'pay',
-                        valueProp: 'security_details',
-                    },
-                },
-            }).then(function(walletForm) {
-                console.log('wallet', walletForm);
-            });
-        });
-    </script>
-
 
     <link rel="stylesheet" href="/assets/category-landing.css" media="screen, print">
 
@@ -83,5 +58,25 @@
         {{#if view}}
         <script src="https://www.mercadopago.com/v2/security.js" view={{view}}></script>
         {{/if}}
+        <script>
+            const mp = new MercadoPago('APP_USR-ff96fe80-6866-4888-847e-c69250754d38', {
+            locale: 'es-AR'
+            });
+            
+            mp.bricks().create("wallet", "wallet_container", {
+                initialization: {
+                    preferenceId: '{{ preference.id }}',
+                    redirectMode: "modal"
+                },
+                customization: {
+                    texts: {
+                        action: 'pay',
+                        valueProp: 'smart_option',
+                    },
+                },
+            }).then(function(walletForm) {
+                console.log('wallet', walletForm);
+            });
+        </script>
     </body>
 </html>
