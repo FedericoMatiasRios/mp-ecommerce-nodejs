@@ -7,7 +7,9 @@
       }
     ],
     "routes": [
-      { "src": "/(.*)", "dest": "/app.js" }
-    ]
+      { "src": "/(.*)", "dest": "app.js" }
+    ],
+    "public": false,
+    "install": { "target": "npm", "include": ["package.json", "package-lock.json"] }
   }
   
