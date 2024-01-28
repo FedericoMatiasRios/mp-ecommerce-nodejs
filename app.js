@@ -30,7 +30,7 @@ app.get('/detail', function (req, res) {
     try {
         const { id, title, img, unit, price } = req.query;
 
-        const baseURL = 'https://e767-2800-810-599-56-c363-d814-e53d-254.ngrok-free.app/';
+        const baseURL = 'https://9504-2800-810-599-56-c363-d814-e53d-254.ngrok-free.app/';
 
         const cleanedImagePath = img.replace('./', '');
 
@@ -58,12 +58,12 @@ app.get('/detail', function (req, res) {
                 "surname": "Landa",
                 "email": "test_user_36961754@testuser.com",
                 "phone": {
-                    "area_code": "11",
-                    "number": Number(33670032)
+                    "area_code": "011",
+                    "number": Number(22223333)
                 },
                 "identification": {
                     "type": "DNI",
-                    "number": "12345678"
+                    "number": "22333444"
                 },
                 "address": {
                     "street_name": "calle falsa",
@@ -72,9 +72,9 @@ app.get('/detail', function (req, res) {
                 }
             },
             "back_urls": {
-                "success": "https://e767-2800-810-599-56-c363-d814-e53d-254.ngrok-free.app/success",
-                "failure": "https://e767-2800-810-599-56-c363-d814-e53d-254.ngrok-free.app/failure",
-                "pending": "https://e767-2800-810-599-56-c363-d814-e53d-254.ngrok-free.app/pending"
+                "success": "https://9504-2800-810-599-56-c363-d814-e53d-254.ngrok-free.app/success",
+                "failure": "https://9504-2800-810-599-56-c363-d814-e53d-254.ngrok-free.app/failure",
+                "pending": "https://9504-2800-810-599-56-c363-d814-e53d-254.ngrok-free.app/pending"
             },
             "auto_return": "approved",
             "payment_methods": {
@@ -83,29 +83,21 @@ app.get('/detail', function (req, res) {
                         "id": "visa"
                     }
                 ],
-                "excluded_payment_types": [
-                    {
-                        "id": "ticket"
-                    }
-                ],
                 "installments": 6
             },
-            "notification_url": "https://e767-2800-810-599-56-c363-d814-e53d-254.ngrok-free.app/notifications",
+            "notification_url": "https://9504-2800-810-599-56-c363-d814-e53d-254.ngrok-free.app/notifications",
             "external_reference": "federicomatiasrios@gmail.com",
             "expires": false,
-          },
-          requestOptions: {
-            integratorId: 'dev_24c65fb163bf11ea96500242ac130004',
-        }
+          }
         })
         .then((preference) => {
-            const initPoint = preference.init_point;
+            const initPoint = preference.init_point + "&redirect_mode=modal";
             console.log('init_point:', initPoint);
 
             console.log('preference:', preference);
 
-            res.redirect(initPoint);
-            //res.render('detail', { view:'detail', title, price, unit, preference });
+            //res.redirect(initPoint);
+            res.render('detail', { view:'detail', title, price, unit, preference, initPoint });
         })
         .catch((error) => {
             console.error('Error al crear preferencia:', error);
