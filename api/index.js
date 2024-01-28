@@ -8,11 +8,12 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 const client = new MercadoPagoConfig({
-    accessToken: process.env.MERCADOPAGO_ACCESS_TOKEN,
-    integratorId: 'dev_24c65fb163bf11ea96500242ac130004',
-  });
+  accessToken: process.env.MERCADOPAGO_ACCESS_TOKEN,
+  options: {
+      integratorId: 'dev_24c65fb163bf11ea96500242ac130004',
+  },
+});
 
-// Use body-parser middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
