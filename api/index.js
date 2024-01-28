@@ -18,6 +18,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
+app.set('views', __dirname + '/../views');
 
 app.use(express.static('assets'));
 app.use('/assets', express.static(__dirname + '/assets'));
