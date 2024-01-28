@@ -30,7 +30,7 @@ app.get('/detail', function (req, res) {
     try {
         const { id, title, img, unit, price } = req.query;
 
-        const baseURL = 'https://mp-ecommerce-nodejs-dyb7vlinm-federicomatiasrios-projects.vercel.app/';
+        const baseURL = 'https://mp-ecommerce-nodejs-theta.vercel.app/';
 
         const cleanedImagePath = img.replace('./', '');
 
@@ -72,9 +72,9 @@ app.get('/detail', function (req, res) {
                 }
             },
             "back_urls": {
-                "success": "https://mp-ecommerce-nodejs-dyb7vlinm-federicomatiasrios-projects.vercel.app/success",
-                "failure": "https://mp-ecommerce-nodejs-dyb7vlinm-federicomatiasrios-projects.vercel.app/failure",
-                "pending": "https://mp-ecommerce-nodejs-dyb7vlinm-federicomatiasrios-projects.vercel.app/pending"
+                "success": "https://mp-ecommerce-nodejs-theta.vercel.app/success",
+                "failure": "https://mp-ecommerce-nodejs-theta.vercel.app/failure",
+                "pending": "https://mp-ecommerce-nodejs-theta.vercel.app/pending"
             },
             "auto_return": "approved",
             "payment_methods": {
@@ -85,7 +85,7 @@ app.get('/detail', function (req, res) {
                 ],
                 "installments": 6
             },
-            "notification_url": "https://mp-ecommerce-nodejs-dyb7vlinm-federicomatiasrios-projects.vercel.app/notifications",
+            "notification_url": "https://mp-ecommerce-nodejs-theta.vercel.app/notifications",
             "external_reference": "federicomatiasrios@gmail.com",
             "expires": false,
           }
