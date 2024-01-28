@@ -2,14 +2,12 @@
     "version": 2,
     "builds": [
       {
-        "src": "app.js",
-        "use": "@now/node"
+        "src": "./app.js",
+        "use": "@vercel/node"
       }
     ],
     "routes": [
-      { "src": "/(.*)", "dest": "app.js" }
-    ],
-    "public": false,
-    "install": { "target": "npm", "include": ["package.json", "package-lock.json"] }
+      { "src": "/(.*)", "dest": "/" }
+    ]
   }
   
