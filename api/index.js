@@ -89,9 +89,6 @@ app.get('/detail', function (req, res) {
             notification_url: 'https://mp-ecommerce-nodejs-theta.vercel.app/notifications',
             statement_descriptor: 'MEUNEGOCIO',
             external_reference: 'federicomatiasrios@gmail.com',
-            expires: true,
-            expiration_date_from: '2016-02-01T12:00:00.000-04:00',
-            expiration_date_to: '2016-02-28T12:00:00.000-04:00',
           }
         })
         .then((preference) => {
