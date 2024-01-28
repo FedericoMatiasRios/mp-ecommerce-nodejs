@@ -1,18 +1,28 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
-const { MercadoPagoConfig, Preference } = require('mercadopago');
+//const { MercadoPagoConfig, Preference } = require('mercadopago');
+const mercadopago = require("mercadopago");
+
 require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-const client = new MercadoPagoConfig({
+/* const client = new MercadoPagoConfig({
   accessToken: process.env.MERCADOPAGO_ACCESS_TOKEN,
   options: {
       integratorId: 'dev_24c65fb163bf11ea96500242ac130004',
   },
+}); */
+
+mercadopago.configure({
+  access_token: process.env.MERCADOPAGO_ACCESS_TOKEN,
+  "x-integrator_id": "dev_24c65fb163bf11ea96500242ac130004",
+  integrator_id: 'dev_24c65fb163bf11ea96500242ac130004'
 });
+
+mercadopago.configurations.setAccessToken(process.env.MERCADOPAGO_ACCESS_TOKEN);
 
 
 // Use body-parser middleware
@@ -148,4 +158,77 @@ app.post("/notifications" , function (request, res) {
     res.status(200).send("Ok");
   });
 
+  app.post('/create_preference', function (req, res) {
+        const { id, title, img, unit, price } = req.query;
+
+        const baseURL = 'https://mp-ecommerce-nodejs-theta.vercel.app/';
+
+        const cleanedImagePath = img.replace('./', '');
+
+        const fullURL = baseURL + cleanedImagePath;
+
+        console.log(fullURL);
+
+
+
+        let preference = {
+          items: [
+            {
+              id: Number(1234),
+              title,
+              picture_url: fullURL,
+              description: 'Dispositivo móvil de Tienda e-commerce',
+              quantity: Number(unit),
+              unit_price: Number(price),
+              currency_id: "ARS",
+            }
+          ],
+          payer: {
+            name: 'Lalo',
+            surname: 'Landa',
+            email: 'test_user_36961754@testuser.com',
+            phone: {
+              area_code: '11',
+              number: '2222-3333'
+            },
+            identification: {
+              type: 'DNI',
+              number: '22333444'
+            },
+            address: {
+              street_name: 'calle falsa',
+              street_number: 123,
+              zip_code: '1040'
+            }
+          },
+          back_urls: {
+            success: 'https://mp-ecommerce-nodejs-theta.vercel.app/success',
+            failure: 'https://mp-ecommerce-nodejs-theta.vercel.app/failure',
+            pending: 'https://mp-ecommerce-nodejs-theta.vercel.app/pending'
+          },
+          auto_return: 'approved',
+          payment_methods: {
+          excluded_payment_methods: [
+                    {
+                              id: "visa"
+                    }
+          ],
+          excluded_payment_types: [],
+          installments: 6
+          },
+          notification_url: 'https://mp-ecommerce-nodejs-theta.vercel.app/notifications',
+          statement_descriptor: 'MEUNEGOCIO',
+          external_reference: 'federicomatiasrios@gmail.com',
+        };
+    
+        mercadopago.preferences.create(preference)
+              .then(function (response) {
+            let id = response.body.id;
+          res.redirect(response.body.init_point) 
+            })
+            .catch(function (error) {
+                console.log(error);
+              })
+            })
+              
 app.listen(port);
