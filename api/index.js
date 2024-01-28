@@ -53,41 +53,45 @@ app.get('/detail', function (req, res) {
                 currency_id: "ARS",
               }
             ],
-            "payer": {
-                "name": "Lalo",
-                "surname": "Landa",
-                "email": "test_user_36961754@testuser.com",
-                "phone": {
-                    "area_code": "011",
-                    "number": Number(22223333)
-                },
-                "identification": {
-                    "type": "DNI",
-                    "number": "22333444"
-                },
-                "address": {
-                    "street_name": "calle falsa",
-                    "street_number": Number(123),
-                    "zip_code": "1706"
-                }
+            payer: {
+              name: 'Lalo',
+              surname: 'Landa',
+              email: 'test_user_36961754@testuser.com',
+              phone: {
+                area_code: '11',
+                number: '2222-3333'
+              },
+              identification: {
+                type: 'DNI',
+                number: '22333444'
+              },
+              address: {
+                street_name: 'calle falsa',
+                street_number: 123,
+                zip_code: '1040'
+              }
             },
-            "back_urls": {
-                "success": "https://mp-ecommerce-nodejs-theta.vercel.app/success",
-                "failure": "https://mp-ecommerce-nodejs-theta.vercel.app/failure",
-                "pending": "https://mp-ecommerce-nodejs-theta.vercel.app/pending"
+            back_urls: {
+              success: 'https://mp-ecommerce-nodejs-theta.vercel.app/success',
+              failure: 'https://mp-ecommerce-nodejs-theta.vercel.app/failure',
+              pending: 'https://mp-ecommerce-nodejs-theta.vercel.app/pending'
             },
-            "auto_return": "approved",
-            "payment_methods": {
-                "excluded_payment_methods": [
-                    {
-                        "id": "visa"
-                    }
-                ],
-                "installments": 6
+            auto_return: 'approved',
+            payment_methods: {
+            excluded_payment_methods: [
+                      {
+                                id: "visa"
+                      }
+            ],
+            excluded_payment_types: [],
+            installments: 6
             },
-            "notification_url": "https://mp-ecommerce-nodejs-theta.vercel.app/notifications",
-            "external_reference": "federicomatiasrios@gmail.com",
-            "expires": false,
+            notification_url: 'https://mp-ecommerce-nodejs-theta.vercel.app/notifications',
+            statement_descriptor: 'MEUNEGOCIO',
+            external_reference: 'federicomatiasrios@gmail.com',
+            expires: true,
+            expiration_date_from: '2016-02-01T12:00:00.000-04:00',
+            expiration_date_to: '2016-02-28T12:00:00.000-04:00',
           }
         })
         .then((preference) => {
