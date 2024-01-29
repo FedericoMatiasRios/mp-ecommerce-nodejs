@@ -87,15 +87,17 @@ app.get('/detail', async function (req, res) {
       };
 
       const response = await axios.post(
-          'https://api.mercadopago.com/checkout/preferences',
-          preferenceBody,
-          {
-              headers: {
-                  'Authorization': 'Bearer YOUR_ACCESS_TOKEN',
-                  'x-integrator-id': 'dev_24c65fb163bf11ea96500242ac130004', // Set your integrator_id here
-              },
-          }
-      );
+        'https://api.mercadopago.com/checkout/preferences',
+        preferenceBody,
+        {
+            headers: {
+                'Authorization': 'Bearer YOUR_ACCESS_TOKEN',
+                'x-integrator-id': 'dev_24c65fb163bf11ea96500242ac130004', // Set your integrator_id here
+                'Content-Type': 'application/json',
+            },
+        }
+    );
+    
 
       const initPoint = response.data.init_point + "&redirect_mode=modal";
       console.log('init_point:', initPoint);
